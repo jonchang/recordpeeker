@@ -61,12 +61,3 @@ def response(context, flow):
             if 'get_battle_init_data' in flow.request.path:
                 data = json.loads(flow.response.content)
                 handle_get_battle_init_data(data)
-#            elif 'probability' in flow.request.path:
-#                data = json.loads(flow.response.content)
-#                for key, value in data.iteritems():
-#                    if key == "success": continue
-#                    with open("items.csv", "w") as wfile:
-#                        writer = csv.writer(wfile)
-#                        for equip in value["equipments"]:
-#                            writer.writerow([equip["id"], equip["name"]])
-#
