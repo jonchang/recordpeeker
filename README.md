@@ -27,6 +27,26 @@ Then, set up your phone to use your computer as a proxy. Here's what it might lo
 
 Enter a battle, and watch the drops roll in!
 
+```
+$ recordpeeker
+Configure your phone's proxy to point to this computer, then visit mitm.it
+on your phone to install the interception certificate.
+
+Record Peeker is listening on 10.0.0.1, port 8080...
+Entering battle #307001..
+  Round 1:
+    MP drops nothing!
+    Special Combatant drops nothing!
+  Round 2:
+    Sweeper drops 1* Staff (IV)
+    Special Combatant drops nothing!
+  Round 3:
+    Sweeper drops nothing!
+    Sweeper drops 1* orb id#40000031
+  Round 4:
+    Guard Scorpion drops nothing!
+```
+
 ## Contributing
 
 * Currently, the item database only includes equipment (i.e., no orbs or anything else). Edit [items.csv](https://github.com/jonchang/recordpeeker/blob/master/recordpeeker/data/items.csv) to add new things to the database.
