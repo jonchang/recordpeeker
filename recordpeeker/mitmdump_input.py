@@ -2,9 +2,10 @@ import json
 from ast import literal_eval
 import socket
 import heapq
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 from libmproxy.protocol.http import decoded
+from tabulate import tabulate
 
 from recordpeeker import Equipment, ITEMS, slicedict, best_equipment
 
@@ -22,21 +23,24 @@ def get_drops(enemy):
 def handle_get_battle_init_data(data):
     print "Entering battle #{battle_id}..".format(**data["battle"])
     all_rounds_data = data['battle']['rounds']
+    tbl = [["rnd", "enemy", "drop"]]
     for round_data in all_rounds_data:
-        print "  Round {0}:".format(round_data.get("round", "???"))
+        round = round_data.get("round", "???")
         for enemy in round_data["enemy"]:
             had_drop = False
-            name = get_display_name(enemy)
+            enemyname = get_display_name(enemy)
             for drop in get_drops(enemy):
                 if "item_id" in drop:
                     kind = "orb id#" if drop["type"] == 51 else "equipment id#"
                     item = ITEMS.get(drop["item_id"], kind + drop["item_id"])
-                    print "    {0} drops {rarity}* {1}".format(name, item, **drop)
+                    itemname = "{0}* {1}".format(item.get("rarity", "1"), item)
                 else:
-                    print "    {0} drops {amount} gold".format(name, **drop)
+                    itemname = "{0} gold".format(drop.get("amount", 0))
                 had_drop = True
+                tbl.append([round, enemyname, itemname])
             if not had_drop:
-                print "    {0} drops nothing!".format(name)
+                tbl.append([round, enemyname, "nothing"])
+    print tabulate(tbl, headers="firstrow")
     print ""
 
 def handle_party_list(data):
@@ -47,16 +51,23 @@ def handle_party_list(data):
     topn["mnd"] = 2
     topn["def"] = 5
     find_series = [101001, 102001, 104001, 105001, 106001, 107001, 110001]
-    heap = []
+    equips = defaultdict(list)
     for item in data["equipments"]:
-        heapq.heappush(heap, Equipment(slicedict(item, wanted)))
+        kind = item.get("equipment_type", 1)
+        heapq.heappush(equips[kind], Equipment(slicedict(item, wanted)))
+
     for series in find_series:
         print "Best equipment for FF{0}:".format((series - 100001) / 1000)
-        for stat, count in topn.iteritems():
-            for equip in best_equipment(series, heap, stat, count):
-                name = equip["name"].replace(u"\uff0b", "+")
-                print "  {0}: {1} -- {2}".format(stat, equip[stat], name)
-    print ""
+        tbl = {"1s":["stat"], "1v":["n"], "1n":["weapon"], "2s":["stat"], "2v":["n"], "2n":["armor"], "3s":["stat"], "3v":["n"], "3n":["accessory"]}
+        for itemtype in range(1, 4): ## 1, 2, 3
+            for stat, count in topn.iteritems():
+                for equip in best_equipment(series, equips[itemtype], stat, count):
+                    name = equip["name"].replace(u"\uff0b", "+")
+                    tbl["{}s".format(itemtype)].append(stat)
+                    tbl["{}v".format(itemtype)].append(equip[stat])
+                    tbl["{}n".format(itemtype)].append(name)
+        print tabulate(tbl, headers="firstrow")
+        print ""
 
 def start(context, argv):
     global conf

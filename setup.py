@@ -19,7 +19,8 @@ setup(
     license='MIT',
     install_requires=[
         'click>=4.0',
-        'mitmproxy>=0.11.3'
+        'mitmproxy>=0.11.3',
+        'tabulate>=0.7.5'
     ],
     include_package_data=True,
     package_data={
