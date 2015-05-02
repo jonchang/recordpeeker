@@ -8,7 +8,7 @@ from collections import OrderedDict, defaultdict
 from libmproxy.protocol.http import decoded
 from tabulate import tabulate
 
-from recordpeeker import Equipment, ITEMS, slicedict, best_equipment
+from recordpeeker import Equipment, ITEMS, BATTLES, slicedict, best_equipment
 
 def get_display_name(enemy):
     for child in enemy["children"]:
@@ -22,8 +22,11 @@ def get_drops(enemy):
 
 
 def handle_get_battle_init_data(data):
-    print "Entering battle #{battle_id}..".format(**data["battle"])
-    all_rounds_data = data['battle']['rounds']
+    battle_data = data["battle"]
+    battle_id = battle_data["battle_id"]
+    battle_name = BATTLES.get(battle_id, "battle #" + battle_id)
+    print "Entering {0}".format(battle_name)
+    all_rounds_data = battle_data['rounds']
     tbl = [["rnd", "enemy", "drop"]]
     for round_data in all_rounds_data:
         round = round_data.get("round", "???")
@@ -94,26 +97,38 @@ handlers = [
 ]
 
 ignored_requests = [
-    '/dff/',
-    '/dff/splash',
-    '/dff/battle/timestamp'
+    ('/dff/', True),
+    ('/dff/splash', False),
+    ('/dff/?timestamp', False)
+    ('/dff/battle/?timestamp', False)
 ]
+
+def is_request_ignored(path):
+    for ignored in ignored_requests:
+        # The second value indicates whether it should be an exact
+        # match (True) or substring match (False)
+        if ignored[1] and (ignored[0] == path):
+            return True
+        if (not ignored[1]) and (ignored[0] in path):
+            return True
+    return False
 
 def response(context, flow):
     global args
     if flow.request.pretty_host(hostheader=True).endswith('ffrk.denagames.com'):
         if args.verbosity >= 1:
             print flow.request.path
-        with decoded(flow.response):
-            handler = next((x for x in handlers if x[0] in flow.request.path), None)
-            if handler == None:
-                # When verbosity is >= 2, print the content of unknown requests
-                if (args.verbosity >= 2) and (flow.request.path not in ignored_requests):
+        if not is_request_ignored(flow.request.path):
+            with decoded(flow.response):
+                handler = next((x for x in handlers if x[0] in flow.request.path), None)
+                if handler == None:
+                    # When verbosity is >= 2, print the content of unknown requests
+                    if args.verbosity >= 2:
+                        data = json.loads(flow.response.content)
+                        print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
+                else:
                     data = json.loads(flow.response.content)
-                    print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
-            else:
-                data = json.loads(flow.response.content)
-                # When verbosity is >= 3, also print the content of known requests
-                if args.verbosity >= 3:
-                    print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
-                handler[1](data)
+                    # When verbosity is >= 3, also print the content of known requests
+                    if args.verbosity >= 3:
+                        print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
+                    handler[1](data)

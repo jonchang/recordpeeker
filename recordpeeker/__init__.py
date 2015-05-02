@@ -22,12 +22,13 @@ def slicedict(d, s):
 def best_equipment(series, heap, stat, n=3):
     return [y.rs(series) for y in heapq.nlargest(n, heap, lambda x: x.rs(series)[stat])]
 
-def load_item_dict():
+def load_dict(path):
     res = dict()
-    rfile = resource_stream("recordpeeker", "data/items.csv")
+    rfile = resource_stream("recordpeeker", path)
     reader = csv.reader(rfile)
     for row in reader:
         res[row[0]] = row[1]
     return res
 
-ITEMS = load_item_dict()
+ITEMS = load_dict("data/items.csv")
+BATTLES = load_dict("data/battles.csv")
