@@ -89,13 +89,14 @@ def start(context, argv):
     print "Try entering the Party screen, or starting a battle."
 
 handlers = [
-    ('/dff/get_battle_init_data' , handle_get_battle_init_data),
+    ('/dff/battle/get_battle_init_data' , handle_get_battle_init_data),
     ('/dff/party/list' , handle_party_list)
 ]
 
 ignored_requests = [
     '/dff/',
-    '/dff/splash'
+    '/dff/splash',
+    '/dff/battle/timestamp'
 ]
 
 def response(context, flow):
@@ -105,12 +106,13 @@ def response(context, flow):
             print flow.request.path
         with decoded(flow.response):
             handler = next((x for x in handlers if x[0] in flow.request.path), None)
-            data = json.loads(flow.response.content)
             if handler == None:
                 # When verbosity is >= 2, print the content of unknown requests
                 if (args.verbosity >= 2) and (flow.request.path not in ignored_requests):
+                    data = json.loads(flow.response.content)
                     print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
             else:
+                data = json.loads(flow.response.content)
                 # When verbosity is >= 3, also print the content of known requests
                 if args.verbosity >= 3:
                     print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
