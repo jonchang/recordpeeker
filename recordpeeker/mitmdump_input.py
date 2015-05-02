@@ -1,5 +1,7 @@
 import json
 from ast import literal_eval
+import shlex
+import os
 import socket
 import heapq
 from collections import OrderedDict, defaultdict
@@ -75,19 +77,27 @@ def handle_party_list(data):
         print ""
 
 def start(context, argv):
-    global conf
-    conf = literal_eval(argv[1])
+    global args
+    print "argv = %s" % argv
+    
+    from command_line import parse_args
+    split_args = shlex.split(argv[1], False, os.name == "Posix")
+    args = parse_args(split_args)
+    print "port = %s, verbose = %s" % (args.port, args.verbose)
     ip = socket.gethostbyname(socket.gethostname())
     ip = "" if ip == '127.0.0.1' else ip + ", "
     print "Configure your phone's proxy to point to this computer, then visit mitm.it"
     print "on your phone to install the interception certificate.\n"
-    print "Record Peeker is listening on {0}port {port}.\n".format(ip, **conf)
+    print "Record Peeker is listening on {0}port {1}.\n".format(ip, args.port)
     print "Try entering the Party screen, or starting a battle."
 
 
 
 def response(context, flow):
+    global args
     if flow.request.pretty_host(hostheader=True).endswith('ffrk.denagames.com'):
+        if args.verbose:
+            print flow.request.path
         with decoded(flow.response):
             if 'get_battle_init_data' in flow.request.path:
                 data = json.loads(flow.response.content)
