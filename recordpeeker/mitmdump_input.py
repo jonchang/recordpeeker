@@ -58,14 +58,19 @@ def handle_party_list(data):
 
     for series in find_series:
         print "Best equipment for FF{0}:".format((series - 100001) / 1000)
-        tbl = {"1s":["stat"], "1v":["n"], "1n":["weapon"], "2s":["stat"], "2v":["n"], "2n":["armor"], "3s":["stat"], "3v":["n"], "3n":["accessory"]}
+
+        # Need to use lists for column ordering
+        tbl = ["stat n weapon stat n armor stat n accessory".split()]
+        tbldata = [[],[],[],[]]
         for itemtype in range(1, 4): ## 1, 2, 3
             for stat, count in topn.iteritems():
                 for equip in best_equipment(series, equips[itemtype], stat, count):
                     name = equip["name"].replace(u"\uff0b", "+")
-                    tbl["{}s".format(itemtype)].append(stat)
-                    tbl["{}v".format(itemtype)].append(equip[stat])
-                    tbl["{}n".format(itemtype)].append(name)
+                    tbldata[itemtype].append([stat, equip[stat], name])
+
+        # Transpose data
+        for idx in range(0, len(tbldata[1])):
+            tbl.append(tbldata[1][idx] + tbldata[2][idx] + tbldata[3][idx])
         print tabulate(tbl, headers="firstrow")
         print ""
 

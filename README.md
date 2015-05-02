@@ -48,22 +48,23 @@ Entering battle #307001..
       4  Guard Scorpion     nothing
 
 Best equipment for FF4:
-  n  stat    accessory               n  stat    armor                 stat      n  weapon
----  ------  --------------------  ---  ------  --------------------  ------  ---  ------------------
- 15  atk     Hyper Wrist (VI)       75  atk     Genji Helm (V)        atk      12  Kunai (IV)++
-  8  atk     Hero's Ring (VI)       75  atk     Mythril Helm (IV)++   atk      10  Kunai (IV)++
-  5  atk     Power Wrist (VII)      75  atk     Crystal Helm (VI)     atk       9  Kunai (IV)++
-  5  atk     Power Wrist (VII)      75  atk     Rune Armlet (VII)+    atk       8  Kunai (IV)++
-  5  atk     Power Wrist (VII)      61  atk     Diamond Bangle (VII)  atk       8  Whip (IV)++
-  8  matk    Earring (VII)          92  matk    Black Cowl (IV)++     matk     27  Whip (IV)++
-  8  matk    Earring (VII)          64  matk    Green Beret (IV)++    matk     17  Sage's Staff (IV)+
-  0  mnd     Earring (VII)         128  mnd     Black Cowl (IV)++     mnd      27  Sage's Staff (IV)+
-  0  mnd     Talisman (VII)         80  mnd     Wizard's Hat (IV)++   mnd      19  Power Staff (IV)++
- 12  def     Protect Ring (VII)      0  def     Genji Armor (V)       def     106  Mace (XII)
-  3  def     Star Pendant (VII)      0  def     Genji Helm (V)        def      99  Dagger (IX)
-  3  def     Silver Glasses (VII)    0  def     Mythril Helm (IV)++   def      92  Staff (IV)
-  0  def     Earring (VII)           0  def     Genji Shield (IV)     def      83  Cat Claws (III)
-  0  def     Talisman (VII)          0  def     Black Cowl (IV)++     def      67  Cat Claws (III)
+stat      n  weapon              stat      n  armor                 stat      n  accessory
+------  ---  ------------------  ------  ---  --------------------  ------  ---  --------------------
+atk      75  Kunai (IV)++        atk      12  Genji Helm (V)        atk      15  Hyper Wrist (VI)
+atk      75  Kunai (IV)++        atk      10  Mythril Helm (IV)++   atk       8  Hero's Ring (VI)
+atk      75  Kunai (IV)++        atk       9  Crystal Helm (VI)     atk       5  Power Wrist (VII)
+atk      75  Kunai (IV)++        atk       8  Rune Armlet (VII)+    atk       5  Power Wrist (VII)
+atk      61  Whip (IV)++         atk       8  Diamond Bangle (VII)  atk       5  Power Wrist (VII)
+matk     92  Whip (IV)++         matk     27  Black Cowl (IV)++     matk      8  Earring (VII)
+matk     64  Sage's Staff (IV)+  matk     17  Green Beret (IV)++    matk      8  Earring (VII)
+mnd     128  Sage's Staff (IV)+  mnd      27  Black Cowl (IV)++     mnd       0  Earring (VII)
+mnd      80  Power Staff (IV)++  mnd      19  Wizard's Hat (IV)++   mnd       0  Talisman (VII)
+def       0  Mace (XII)          def     106  Genji Armor (V)       def      12  Protect Ring (VII)
+def       0  Dagger (IX)         def      99  Genji Helm (V)        def       3  Star Pendant (VII)
+def       0  Staff (IV)          def      92  Mythril Helm (IV)++   def       3  Silver Glasses (VII)
+def       0  Cat Claws (III)     def      83  Genji Shield (IV)     def       0  Earring (VII)
+def       0  Cat Claws (III)     def      67  Black Cowl (IV)++     def       0  Talisman (VII)
+
 ```
 
 ## Contributing
