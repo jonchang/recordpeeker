@@ -53,3 +53,6 @@ docs/_build/
 # PyBuilder
 target/
 
+# Python Tools for Visual Studio Project Files
+*.pyproj
+

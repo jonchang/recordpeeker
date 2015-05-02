@@ -1,6 +1,7 @@
 import os
 import json
 from subprocess import call
+import sys
 
 import click
 
@@ -11,7 +12,7 @@ def launch(port):
 
     args = dict(port=port)
 
-    command = ['mitmdump', '-s {0} "{1}"'.format(script, args), '-q']
+    command = [sys.executable, 'mitmdump_shim.py', '-s {0} "{1}"'.format(script, args), '-q']
     call(command)
 
 if __name__ == '__main__':
