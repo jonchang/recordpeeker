@@ -32,35 +32,38 @@ $ recordpeeker
 Configure your phone's proxy to point to this computer, then visit mitm.it
 on your phone to install the interception certificate.
 
-Record Peeker is listening on 10.0.0.1, port 8080...
+Record Peeker is listening on 10.0.0.1, port 8080.
+
+Try entering the Party screen, or starting a battle.
+
 Entering battle #307001..
-  Round 1:
-    MP drops nothing!
-    Special Combatant drops nothing!
-  Round 2:
-    Sweeper drops 1* Staff (IV)
-    Special Combatant drops nothing!
-  Round 3:
-    Sweeper drops nothing!
-    Sweeper drops 1* orb id#40000031
-  Round 4:
-    Guard Scorpion drops nothing!
+  round  enemy              drop
+-------  -----------------  --------
+      1  Sweeper            nothing
+      1  Special Combatant  nothing
+      2  Sweeper            nothing
+      2  Smogger            nothing
+      3  MP                 133 gold
+      3  Smogger            nothing
+      4  Guard Scorpion     nothing
 
 Best equipment for FF4:
-  atk: 75 -- Kunai (IV)++
-  atk: 75 -- Kunai (IV)++
-  atk: 75 -- Kunai (IV)++
-  atk: 75 -- Kunai (IV)++
-  atk: 61 -- Whip (IV)++
-  matk: 92 -- Whip (IV)++
-  matk: 64 -- Sage's Staff (IV)+
-  mnd: 128 -- Sage's Staff (IV)+
-  mnd: 80 -- Power Staff (IV)++
-  def: 106 -- Genji Armor (V)
-  def: 99 -- Genji Helm (V)
-  def: 92 -- Mythril Helm (IV)++
-  def: 83 -- Genji Shield (IV)
-  def: 67 -- Black Cowl (IV)++
+  n  stat    accessory               n  stat    armor                 stat      n  weapon
+---  ------  --------------------  ---  ------  --------------------  ------  ---  ------------------
+ 15  atk     Hyper Wrist (VI)       75  atk     Genji Helm (V)        atk      12  Kunai (IV)++
+  8  atk     Hero's Ring (VI)       75  atk     Mythril Helm (IV)++   atk      10  Kunai (IV)++
+  5  atk     Power Wrist (VII)      75  atk     Crystal Helm (VI)     atk       9  Kunai (IV)++
+  5  atk     Power Wrist (VII)      75  atk     Rune Armlet (VII)+    atk       8  Kunai (IV)++
+  5  atk     Power Wrist (VII)      61  atk     Diamond Bangle (VII)  atk       8  Whip (IV)++
+  8  matk    Earring (VII)          92  matk    Black Cowl (IV)++     matk     27  Whip (IV)++
+  8  matk    Earring (VII)          64  matk    Green Beret (IV)++    matk     17  Sage's Staff (IV)+
+  0  mnd     Earring (VII)         128  mnd     Black Cowl (IV)++     mnd      27  Sage's Staff (IV)+
+  0  mnd     Talisman (VII)         80  mnd     Wizard's Hat (IV)++   mnd      19  Power Staff (IV)++
+ 12  def     Protect Ring (VII)      0  def     Genji Armor (V)       def     106  Mace (XII)
+  3  def     Star Pendant (VII)      0  def     Genji Helm (V)        def      99  Dagger (IX)
+  3  def     Silver Glasses (VII)    0  def     Mythril Helm (IV)++   def      92  Staff (IV)
+  0  def     Earring (VII)           0  def     Genji Shield (IV)     def      83  Cat Claws (III)
+  0  def     Talisman (VII)          0  def     Black Cowl (IV)++     def      67  Cat Claws (III)
 ```
 
 ## Contributing
