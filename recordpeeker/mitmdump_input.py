@@ -1,5 +1,4 @@
 import json
-from ast import literal_eval
 import shlex
 import os
 import socket
@@ -78,12 +77,10 @@ def handle_party_list(data):
 
 def start(context, argv):
     global args
-    print "argv = %s" % argv
     
     from command_line import parse_args
     split_args = shlex.split(argv[1], False, os.name == "Posix")
     args = parse_args(split_args)
-    print "port = %s, verbose = %s" % (args.port, args.verbose)
     ip = socket.gethostbyname(socket.gethostname())
     ip = "" if ip == '127.0.0.1' else ip + ", "
     print "Configure your phone's proxy to point to this computer, then visit mitm.it"
