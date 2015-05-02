@@ -33,7 +33,7 @@ def handle_get_battle_init_data(data):
                 if "item_id" in drop:
                     kind = "orb id#" if drop["type"] == 51 else "equipment id#"
                     item = ITEMS.get(drop["item_id"], kind + drop["item_id"])
-                    itemname = "{0}* {1}".format(item.get("rarity", "1"), item)
+                    itemname = "{0}* {1}".format(drop.get("rarity", "1"), item)
                 else:
                     itemname = "{0} gold".format(drop.get("amount", 0))
                 had_drop = True
