@@ -88,17 +88,30 @@ def start(context, argv):
     print "Record Peeker is listening on {0}port {1}.\n".format(ip, args.port)
     print "Try entering the Party screen, or starting a battle."
 
+handlers = [
+    ('/dff/get_battle_init_data' , handle_get_battle_init_data),
+    ('/dff/party/list' , handle_party_list)
+]
 
+ignored_requests = [
+    '/dff/',
+    '/dff/splash'
+]
 
 def response(context, flow):
     global args
     if flow.request.pretty_host(hostheader=True).endswith('ffrk.denagames.com'):
-        if args.verbose:
+        if args.verbosity >= 1:
             print flow.request.path
         with decoded(flow.response):
-            if 'get_battle_init_data' in flow.request.path:
-                data = json.loads(flow.response.content)
-                handle_get_battle_init_data(data)
-            elif 'party/list' in flow.request.path:
-                data = json.loads(flow.response.content)
-                handle_party_list(data)
+            handler = next((x for x in handlers if x[0] in flow.request.path), None)
+            data = json.loads(flow.response.content)
+            if handler == None:
+                # When verbosity is >= 2, print the content of unknown requests
+                if (args.verbosity >= 2) and (flow.request.path not in ignored_requests):
+                    print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
+            else:
+                # When verbosity is >= 3, also print the content of known requests
+                if args.verbosity >= 3:
+                    print json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
+                handler[1](data)

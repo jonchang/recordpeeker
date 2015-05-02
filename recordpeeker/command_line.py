@@ -7,7 +7,7 @@ import sys
 def parse_args(argv):
     parser = argparse.ArgumentParser("Test")
     parser.add_argument("--port", "-p", type=int, default=8080, help="Specify the port recordpeeker runs on")
-    parser.add_argument("--verbose", "-v", default=False, action="store_true")
+    parser.add_argument("--verbosity", "-v", default=0, type=int, choices=[0,1,2,3])
     parser.add_argument("--single-process", "-s", default=False, action="store_true", help=argparse.SUPPRESS)
     return parser.parse_args(argv[1:])
 
