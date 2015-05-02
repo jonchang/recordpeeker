@@ -65,7 +65,7 @@ Best equipment for FF4:
 
 ## Contributing
 
-* Currently, the item database only includes equipment (i.e., no orbs or anything else). Edit [items.csv](https://github.com/jonchang/recordpeeker/blob/master/recordpeeker/data/items.csv) to add new things to the database.
+* Missing item names? Edit [items.csv](https://github.com/jonchang/recordpeeker/blob/master/recordpeeker/data/items.csv) to add new things to the database.
 
 * Functions wishlist
     * Package a .app or .exe for easy setup
