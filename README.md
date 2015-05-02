@@ -52,7 +52,7 @@ Entering battle #307001..
 * Currently, the item database only includes equipment (i.e., no orbs or anything else). Edit [items.csv](https://github.com/jonchang/recordpeeker/blob/master/recordpeeker/data/items.csv) to add new things to the database.
 
 * Functions wishlist
-    * Suggest equipment optimizations
+    * Package a .app or .exe for easy setup
     * Record drop frequencies
 
 ## Developing
