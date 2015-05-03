@@ -8,7 +8,7 @@ from collections import OrderedDict, defaultdict
 from libmproxy.protocol.http import decoded
 from tabulate import tabulate
 
-from recordpeeker import Equipment, ITEMS, BATTLES, slicedict, best_equipment
+from recordpeeker import Equipment, ITEMS, BATTLES, DUNGEONS, slicedict, best_equipment
 
 def get_display_name(enemy):
     for child in enemy["children"]:
@@ -30,6 +30,8 @@ def handle_get_battle_init_data(data):
     tbl = [["rnd", "enemy", "drop"]]
     for round_data in all_rounds_data:
         round = round_data.get("round", "???")
+        for round_drop in round_data["drop_item_list"]:
+            tbl.append([round, "<round drop>", round_drop["type"]])
         for enemy in round_data["enemy"]:
             had_drop = False
             enemyname = get_display_name(enemy)
@@ -78,6 +80,36 @@ def handle_party_list(data):
         print tabulate(tbl, headers="firstrow")
         print ""
 
+def handle_dungeon_list(data):
+    tbl = []
+    world_data = data["world"]
+    world_id = world_data["id"]
+    world_name = world_data["name"]
+    print "Dungeon List for {0} (id={1})".format(world_name, world_id)
+    dungeons = data["dungeons"]
+    for dungeon in dungeons:
+        name = dungeon["name"]
+        id = dungeon["id"]
+        difficulty = dungeon["challenge_level"]
+        type = "ELITE" if dungeon["type"] == 2 else "NORMAL"
+        tbl.append([name, id, difficulty, type])
+    tbl = sorted(tbl, key=lambda row : int(row[1]))
+    tbl.insert(0, ["Name", "ID", "Difficulty", "Type"])
+    print tabulate(tbl, headers="firstrow")
+
+def handle_battle_list(data):
+    tbl = [["Name", "Id", "Rounds"]]
+    dungeon_data = data["dungeon_session"]
+    dungeon_id = dungeon_data["dungeon_id"]
+    dungeon_name = dungeon_data["name"]
+    dungeon_type = int(dungeon_data["type"])
+    world_id = dungeon_data["world_id"]
+    print "Entering dungeon {0} ({1})".format(dungeon_name, "Elite" if dungeon_type==2 else "Normal")
+    battles = data["battles"]
+    for battle in battles:
+        tbl.append([battle["name"], battle["id"], battle["round_num"]])
+    print tabulate(tbl, headers="firstrow")
+
 def start(context, argv):
     global args
     
@@ -93,14 +125,16 @@ def start(context, argv):
 
 handlers = [
     ('/dff/battle/get_battle_init_data' , handle_get_battle_init_data),
-    ('/dff/party/list' , handle_party_list)
+    ('/dff/party/list', handle_party_list),
+    ('/dff/world/dungeons', handle_dungeon_list),
+    ('/dff/world/battles', handle_battle_list),
 ]
 
 ignored_requests = [
     ('/dff/', True),
     ('/dff/splash', False),
-    ('/dff/?timestamp', False)
-    ('/dff/battle/?timestamp', False)
+    ('/dff/?timestamp', False),
+    ('/dff/battle/?timestamp', False),
 ]
 
 def is_request_ignored(path):

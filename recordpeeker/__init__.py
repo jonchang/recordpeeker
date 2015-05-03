@@ -32,3 +32,4 @@ def load_dict(path):
 
 ITEMS = load_dict("data/items.csv")
 BATTLES = load_dict("data/battles.csv")
+DUNGEONS = load_dict("data/dungeons.csv")
