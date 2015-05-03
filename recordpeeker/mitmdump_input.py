@@ -112,7 +112,7 @@ def handle_battle_list(data):
 
 def handle_survival_event(data):
     # XXX: This maybe works for all survival events...
-    enemy = data["enemy"]
+    enemy = data.get("enemy", dict(name="???", memory_factor="0"))
     name = enemy.get("name", "???")
     factor = float(enemy.get("memory_factor", "0"))
     print "Your next opponent is {0} (x{1:.1f})".format(name, factor)
