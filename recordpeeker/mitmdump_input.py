@@ -110,6 +110,13 @@ def handle_battle_list(data):
         tbl.append([battle["name"], battle["id"], battle["round_num"]])
     print tabulate(tbl, headers="firstrow")
 
+def handle_survival_event(data):
+    # XXX: This maybe works for all survival events...
+    enemy = data["enemy"]
+    name = enemy.get("name", "???")
+    factor = float(enemy.get("memory_factor", "0"))
+    print "Your next opponent is {0} (x{1:.1f})".format(name, factor)
+
 def start(context, argv):
     global args
     
@@ -128,6 +135,7 @@ handlers = [
     ('/dff/party/list', handle_party_list),
     ('/dff/world/dungeons', handle_dungeon_list),
     ('/dff/world/battles', handle_battle_list),
+    ('/dff/event/coliseum', handle_survival_event)
 ]
 
 ignored_requests = [
