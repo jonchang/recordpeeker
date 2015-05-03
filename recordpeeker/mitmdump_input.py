@@ -135,7 +135,7 @@ handlers = [
     ('/dff/party/list', handle_party_list),
     ('/dff/world/dungeons', handle_dungeon_list),
     ('/dff/world/battles', handle_battle_list),
-    ('/dff/event/coliseum', handle_survival_event)
+    ('/dff/event/coliseum/6/get_data', handle_survival_event)
 ]
 
 ignored_requests = [
@@ -162,6 +162,7 @@ def response(context, flow):
             print flow.request.path
         if not is_request_ignored(flow.request.path):
             with decoded(flow.response):
+                # TODO: generalize this to also handle wildcards etc.
                 handler = next((x for x in handlers if x[0] in flow.request.path), None)
                 if handler == None:
                     # When verbosity is >= 2, print the content of unknown requests
