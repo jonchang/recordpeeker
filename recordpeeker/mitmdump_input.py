@@ -113,7 +113,7 @@ def handle_battle_list(data):
 def start(context, argv):
     global args
     
-    from command_line import parse_args
+    from recordpeeker.command_line import parse_args
     split_args = shlex.split(argv[1], False, os.name == "Posix")
     args = parse_args(split_args)
     ip = socket.gethostbyname(socket.gethostname())
