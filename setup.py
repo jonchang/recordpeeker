@@ -24,7 +24,7 @@ setup(
     ],
     include_package_data=True,
     package_data={
-        'recordpeeker': ["data/items.csv"]
+        'recordpeeker': ["data/*.csv"]
         },
     entry_points={
       'console_scripts':[
