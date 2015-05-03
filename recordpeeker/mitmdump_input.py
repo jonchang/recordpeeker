@@ -114,8 +114,7 @@ def start(context, argv):
     global args
     
     from recordpeeker.command_line import parse_args
-    split_args = shlex.split(argv[1], False, os.name == "Posix")
-    args = parse_args(split_args)
+    args = parse_args(argv)
     ip = socket.gethostbyname(socket.gethostname())
     ip = "" if ip == '127.0.0.1' else ip + ", "
     print "Configure your phone's proxy to point to this computer, then visit mitm.it"
