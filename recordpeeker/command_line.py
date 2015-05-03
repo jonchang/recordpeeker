@@ -14,8 +14,12 @@ def launch():
 
     # This is just here so that --help returns the arguments
     args = parse_args(sys.argv)
-    arglist = " ".join(sys.argv[1:])
-    sys.argv = [sys.argv[0], '-s "{0}" "{1}"'.format(script, arglist), '-q']
+    if sys.argv[1:]:
+        arglist = " ".join(sys.argv[1:])
+        scriptargs = '-s "{0}" "{1}"'.format(script, arglist)
+    else:
+        scriptargs = '-s "{0}"'.format(script)
+    sys.argv = [sys.argv[0], scriptargs, '-q']
     from libmproxy.main import mitmdump
     mitmdump()
 
