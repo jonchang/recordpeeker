@@ -4,14 +4,7 @@ Peeks at FFRK battle drops data. Also reports your best record synergy equipment
 
 ## Installation
 
-Note: Only tested on OS X. Will probably work on Windows and Linux as long as mitmproxy works too.
-
-Assuming you have [Homebrew](http://brew.sh) installed:
-
-```
-brew install python
-pip install git+https://github.com/jonchang/recordpeeker.git
-```
+See [INSTALL.md](https://github.com/jonchang/recordpeeker/blob/master/INSTALL.md).
 
 ## Usage
 
