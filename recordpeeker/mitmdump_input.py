@@ -115,11 +115,12 @@ def start(context, argv):
     
     from recordpeeker.command_line import parse_args
     args = parse_args(argv)
-    ip = socket.gethostbyname(socket.gethostname())
-    ip = "" if ip == '127.0.0.1' else ip + ", "
+    ips = set([ii[4][0] for ii in socket.getaddrinfo(socket.gethostname(), None) if ii[4][0] != "127.0.0.1"])
     print "Configure your phone's proxy to point to this computer, then visit mitm.it"
     print "on your phone to install the interception certificate.\n"
-    print "Record Peeker is listening on {0}port {1}.\n".format(ip, args.port)
+    print "Record Peeker is listening on port {0}, on these addresses:".format(args.port)
+    print "\n".join(["  * {0}".format(ip) for ip in ips])
+    print ""
     print "Try entering the Party screen, or starting a battle."
 
 handlers = [
