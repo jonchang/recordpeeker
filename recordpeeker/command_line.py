@@ -19,10 +19,10 @@ def launch():
         scriptargs = '-s "{0}" "{1}"'.format(script, arglist)
     else:
         scriptargs = '-s "{0}"'.format(script)
+
     sys.argv = [sys.argv[0], scriptargs, '-q']
     from libmproxy.main import mitmdump
     mitmdump()
 
 if __name__ == '__main__':
     launch()
-

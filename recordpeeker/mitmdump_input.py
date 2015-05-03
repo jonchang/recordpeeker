@@ -122,7 +122,11 @@ def start(context, argv):
     global args
     
     from recordpeeker.command_line import parse_args
-    args = parse_args(argv)
+    if len(argv) > 2:  # have additional arguments
+        split_args = shlex.split(argv[1], False, os.name == "Posix")
+        args = parse_args(split_args)
+    else:
+        args = parse_args(argv)
     ips = set([ii[4][0] for ii in socket.getaddrinfo(socket.gethostname(), None) if ii[4][0] != "127.0.0.1"])
     print "Configure your phone's proxy to point to this computer, then visit mitm.it"
     print "on your phone to install the interception certificate.\n"
