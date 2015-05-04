@@ -80,6 +80,15 @@
 
 ## Set up
 
-1. Open port 8080 on any applicable firewalls on your computer.
-2. Visit [mitm.it][http://mitm.it] on your device and install the interception certificate. Android users: check [this post](http://www.reddit.com/r/FFRecordKeeper/comments/34pf5h/record_peeker_now_probably_works_on_windows/cqwxsuh)
+1.  Open port 8080 on any applicable firewalls on your computer. On OS X, this is in System Preferences -> Security -> Firewall. On Windows, this is in Control Panel -> System and Security -> Windows Firewall -> Advanced Settings.
+
+2.  Then, set up your phone to use your computer as a proxy. Here's what it might look like on iOS:
+
+    ![iOS manual proxy configuration](https://mitmproxy.org/doc/screenshots/ios-manual.png)
+
+    Android users: check [this post](http://www.reddit.com/r/FFRecordKeeper/comments/34pf5h/record_peeker_now_probably_works_on_windows/cqwxsuh) to fix problems with Google Play.
+
+2. Visit [mitm.it](http://mitm.it) on your device and install the interception certificate.
+
+
 3. Start Record Peeker by typing `recordpeeker` in your Terminal.
