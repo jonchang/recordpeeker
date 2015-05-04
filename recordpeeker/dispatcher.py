@@ -56,11 +56,11 @@ class Dispatcher(object):
         with decoded(flow.response):
             handlers = self.get_handlers(flow.request.path)
             if handlers:
-                data = json.loads(flow.response.content)
+                data = json.loads(flow.response.content.decode('utf-8'))
                 if args.verbosity >= 2:
                     print dump_json(data)
                 [x(data) for x in handlers]
             else:
                 if args.verbosity >= 3:
-                    data = json.loads(flow.response.content)
+                    data = json.loads(flow.response.content.decode('utf-8'))
                     print dump_json(data)
