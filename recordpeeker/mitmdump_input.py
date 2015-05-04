@@ -37,12 +37,27 @@ def handle_get_battle_init_data(data):
             had_drop = False
             enemyname = get_display_name(enemy)
             for drop in get_drops(enemy):
-                if "item_id" in drop:
-                    kind = "orb id#" if drop["type"] == 51 else "equipment id#"
-                    item = ITEMS.get(drop["item_id"], kind + drop["item_id"])
-                    itemname = "{0}* {1}".format(drop.get("rarity", "1"), item)
+                item_type = drop.get("type", 0)
+                if item_type == 11: ## gil
+                    itemname = "{0} gil".format(drop.get("amount", 0))
+                elif item_type == 21:
+                    itemname = "potion"
+                elif item_type == 22:
+                    itemname = "hi-potion"
+                elif item_type == 23:
+                    itemname = "x-potion"
+                elif item_type == 31:
+                    itemname = "ether"
+                elif item_type == 32:
+                    itemname = "turbo ether"
+                elif item_type == 41 or item_type == 51:
+                    type_name = "orb id#" if item_type == 51 else "equipment id#"
+                    item = ITEMS.get(drop["item_id"], type_name + drop["item_id"])
+                    itemname = "{0}* {1}".format(drop.get("rarity", 1), item)
+                elif item_type == 61:
+                    itemname = "event item"
                 else:
-                    itemname = "{0} gold".format(drop.get("amount", 0))
+                    itemname = "unknown"
                 had_drop = True
                 tbl.append([round, enemyname, itemname])
             if not had_drop:
@@ -137,7 +152,7 @@ def start(context, argv):
     [dp.ignore(path, regex) for path, regex in ignored_requests]
 
 handlers = [
-    ('/dff/battle/get_battle_init_data' , handle_get_battle_init_data),
+    ('get_battle_init_data' , handle_get_battle_init_data),
     ('/dff/party/list', handle_party_list),
     ('/dff/world/dungeons', handle_dungeon_list),
     ('/dff/world/battles', handle_battle_list),
