@@ -35,7 +35,7 @@
 5.  Install Record Peeker.
 
     ```
-    pip install git+https://github.com/jonchang/recordpeeker.git
+    pip install https://github.com/jonchang/recordpeeker/archive/master.zip
     ```
 
     If there are any updates, you can just run the above command again to pull down any updates.
@@ -67,7 +67,7 @@
 5.  Install Record Peeker.
 
     ```
-    pip install git+https://github.com/jonchang/recordpeeker.git
+    pip install https://github.com/jonchang/recordpeeker/archive/master.zip
     ```
 
     If there are any updates, you can just run the above command again to pull down any updates.
