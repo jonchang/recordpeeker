@@ -32,24 +32,27 @@ def handle_get_battle_init_data(data):
     for round_data in all_rounds_data:
         round = round_data.get("round", "???")
         for round_drop in round_data["drop_item_list"]:
-            tbl.append([round, "<round drop>", round_drop["type"]])
+            item_type = drop.get("type", 0)
+            if item_type == 21:
+                itemname = "potion"
+            elif item_type == 22:
+                itemname = "hi-potion"
+            elif item_type == 23:
+                itemname = "x-potion"
+            elif item_type == 31:
+                itemname = "ether"
+            elif item_type == 32:
+                itemname = "turbo ether"
+            else:
+                itemname = "unknown"
+            tbl.append([round, "<round drop>", itemname])
         for enemy in round_data["enemy"]:
             had_drop = False
             enemyname = get_display_name(enemy)
             for drop in get_drops(enemy):
                 item_type = drop.get("type", 0)
-                if item_type == 11: ## gil
+                if item_type == 11:
                     itemname = "{0} gil".format(drop.get("amount", 0))
-                elif item_type == 21:
-                    itemname = "potion"
-                elif item_type == 22:
-                    itemname = "hi-potion"
-                elif item_type == 23:
-                    itemname = "x-potion"
-                elif item_type == 31:
-                    itemname = "ether"
-                elif item_type == 32:
-                    itemname = "turbo ether"
                 elif item_type == 41 or item_type == 51:
                     type_name = "orb id#" if item_type == 51 else "equipment id#"
                     item = ITEMS.get(drop["item_id"], type_name + drop["item_id"])
