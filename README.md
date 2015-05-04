@@ -2,7 +2,7 @@
 
 Peeks at FFRK battle drops data. Also reports your best record synergy equipment. Could potentially be expanded to do other things.
 
-## Installation
+## Installation and setup
 
 See [INSTALL.md](https://github.com/jonchang/recordpeeker/blob/master/INSTALL.md).
 
@@ -13,10 +13,6 @@ In your Terminal, just type in:
 ```
 recordpeeker
 ```
-
-Then, set up your phone to use your computer as a proxy. Here's what it might look like on iOS:
-
-![iOS manual proxy configuration](https://mitmproxy.org/doc/screenshots/ios-manual.png)
 
 Enter a battle, and watch the drops roll in! Or enter the Party screen and optimize your equipment setup.
 
