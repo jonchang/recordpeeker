@@ -1,6 +1,8 @@
-# Installing Record Peeker
+# Installing and setting up Record Peeker
 
-## Mac OS X
+## Installation
+
+### Mac OS X
 
 *Note: Only tested on OS X Yosemite 10.0*
 
@@ -40,7 +42,7 @@
 
     If there are any updates, you can just run the above command again to pull down any updates.
 
-## Windows
+### Windows
 
 *Note: only tested on Windows 8.1*
 
@@ -72,6 +74,12 @@
 
     If there are any updates, you can just run the above command again to pull down any updates.
 
-## Linux
+### Linux
 
 1.  Probably `apt-get install python-pip` followed by step 5 above. If you run Linux you should be able to figure this out on your own.
+
+## Set up
+
+1. Open port 8080 on any applicable firewalls on your computer.
+2. Visit [mitm.it][http://mitm.it] on your device and install the interception certificate. Android users: check [this post](http://www.reddit.com/r/FFRecordKeeper/comments/34pf5h/record_peeker_now_probably_works_on_windows/cqwxsuh)
+3. Start Record Peeker by typing `recordpeeker` in your Terminal.
