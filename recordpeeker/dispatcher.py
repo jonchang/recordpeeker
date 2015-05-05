@@ -51,13 +51,6 @@ class Dispatcher(object):
                 return handlers
         return []
 
-    def call_handlers(self, path, data, flow):
-        for func in self._handlers[path]:
-            if func in self._wants_flow:
-                func(data, flow)
-            else:
-                func(data)
-
     def handle(self, flow, args):
         if not flow.request.pretty_host(hostheader=True).endswith(self._host):
             return
@@ -71,7 +64,11 @@ class Dispatcher(object):
                 data = json_decode(flow.response.content)
                 if args.verbosity >= 2:
                     print dump_json(data)
-                self.call_handlers(flow.request.path, data, flow)
+                for func in handlers:
+                    if func in self._wants_flow:
+                        func(data, flow)
+                    else:
+                        func(data)
             else:
                 if args.verbosity >= 3:
                     data = json_decode(flow.response.content)
