@@ -4,6 +4,8 @@ from collections import defaultdict
 
 from libmproxy.protocol.http import decoded
 
+from recordpeeker import json_decode
+
 def dump_json(data):
     return json.dumps(data, sort_keys=True, indent=2, separators=(',', ': '))
 
@@ -66,11 +68,11 @@ class Dispatcher(object):
         with decoded(flow.response):
             handlers = self.get_handlers(flow.request.path)
             if handlers:
-                data = json.loads(flow.response.content.decode('utf-8'))
+                data = json_decode(flow.response.content)
                 if args.verbosity >= 2:
                     print dump_json(data)
                 self.call_handlers(flow.request.path, data, flow)
             else:
                 if args.verbosity >= 3:
-                    data = json.loads(flow.response.content.decode('utf-8'))
+                    data = json_decode(flow.response.content)
                     print dump_json(data)

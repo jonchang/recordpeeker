@@ -3,6 +3,7 @@ import time
 
 import requests
 
+from recordpeeker import json_decode
 from recordpeeker.dispatcher import Dispatcher
 
 def enter_dungeon(data, flow):
@@ -27,7 +28,7 @@ def enter_dungeon(data, flow):
         if resp.status_code != requests.codes.ok: resp.raise_for_status()
         resp = requests.post(enter_url, headers=headers, data=dungeon_request)
         if resp.status_code != requests.codes.ok: resp.raise_for_status()
-        data = resp.json()
+        data = json_decode(resp.content)
         name = data.get("enemy", dict(name="???", memory_factor="0")).get("name")
 
     print "Found {0}! Entering the dungeon now...".format(name)
