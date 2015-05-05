@@ -8,7 +8,7 @@ import command_line
 def json_decode(string):
     """Windows likely does not have utf8 as the system encoding and Python is
     too stubborn to provide a sensible default."""
-    return json.loads(string.decode('utf-8'))
+    return json.loads(string.decode('utf-8-sig'))
 
 
 class Equipment(dict):
