@@ -12,14 +12,15 @@ setup(
     name='recordpeeker',
     description='Peeks at data from FFRK',
     long_description=read('README.md'),
-    version='0.1.5',
+    version='0.1.6',
     packages=find_packages(),
     author='Jonathan Chang',
     url='https://github.com/jonchang/recordpeeker',
     license='MIT',
     install_requires=[
         'mitmproxy>=0.11.3',
-        'tabulate>=0.7.5'
+        'tabulate>=0.7.5',
+        'requests>=2.7'
     ],
     include_package_data=True,
     package_data={
@@ -27,7 +28,8 @@ setup(
         },
     entry_points={
       'console_scripts':[
-          'recordpeeker=recordpeeker.command_line:launch'
+          'recordpeeker=recordpeeker.command_line:launch',
+          'forever24=recordpeeker.bin.command_line:launch'
       ]
    }
 )
