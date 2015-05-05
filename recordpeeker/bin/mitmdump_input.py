@@ -1,4 +1,5 @@
 import socket
+import time
 
 import requests
 
@@ -6,7 +7,9 @@ from recordpeeker.dispatcher import Dispatcher
 
 def enter_dungeon(data, flow):
     global args
-    # XXX: This maybe works for all survival events...
+
+    start_time = time.time()
+
     dungeon_request = flow.request.content
     headers = flow.request.headers
     enter_url = flow.request.url
@@ -14,7 +17,11 @@ def enter_dungeon(data, flow):
 
     name = data.get("enemy", dict(name="???", memory_factor="0")).get("name")
 
+    resp = None
     while args.find not in name:
+        if time.time() - start_time > 28: ## times out after 30 seconds
+            print "Took too long! Entering the dungeon so you don't get kicked out."
+            return
         print "Opponent is {0}, retrying...".format(name)
         resp = requests.post(leave_url, headers=headers, data=dungeon_request)
         if resp.status_code != requests.codes.ok: resp.raise_for_status()
@@ -24,7 +31,8 @@ def enter_dungeon(data, flow):
         name = data.get("enemy", dict(name="???", memory_factor="0")).get("name")
 
     print "Found {0}! Entering the dungeon now...".format(name)
-    flow.response.content = resp.content
+    if resp is not None:
+        flow.response.content = resp.content
 
 def start(context, argv):
     global args
@@ -37,7 +45,8 @@ def start(context, argv):
     print "Record Peeker is listening on port {0}, on these addresses:".format(args.port)
     print "\n".join(["  * {0}".format(ip) for ip in ips])
     print ""
-    print "forever24 is waiting for you to enter the magicite factory..."
+    print "forever24 is looking for '{0}' (case-sensitive).".format(args.find)
+    print "Waiting for you to enter the Magitek Facility..."
 
     global dp
     dp = Dispatcher('ffrk.denagames.com')
