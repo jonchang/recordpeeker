@@ -1,5 +1,6 @@
 import socket
 import time
+import re
 
 import requests
 
@@ -51,7 +52,7 @@ def start(context, argv):
 
     global dp
     dp = Dispatcher('ffrk.denagames.com')
-    dp.register('/dff/event/coliseum/6/enter_dungeon', enter_dungeon, flow=True)
+    dp.register(re.compile('/dff/event/coliseum/\d+/enter_dungeon'), enter_dungeon, flow=True)
     [dp.ignore(path, regex) for path, regex in ignored_requests]
 
 ignored_requests = [
