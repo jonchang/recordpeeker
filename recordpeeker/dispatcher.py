@@ -46,9 +46,14 @@ class Dispatcher(object):
         return False
 
     def get_handlers(self, path):
+        pattern_type = type(re.compile(""))
         for mypath, handlers in self._handlers.iteritems():
-            if mypath in path:
-                return handlers
+            if pattern_type == type(mypath):
+                if mypath.search(path):
+                    return handlers
+            else:
+                if mypath in path:
+                    return handlers
         return []
 
     def handle(self, flow, args):
