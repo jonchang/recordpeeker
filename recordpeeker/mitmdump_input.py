@@ -32,7 +32,7 @@ def handle_get_battle_init_data(data):
     for round_data in all_rounds_data:
         round = round_data.get("round", "???")
         for round_drop in round_data["drop_item_list"]:
-            item_type = drop.get("type", 0)
+            item_type = round_drop.get("type", 0)
             if item_type == 21:
                 itemname = "potion"
             elif item_type == 22:
