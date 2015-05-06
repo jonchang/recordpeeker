@@ -12,7 +12,7 @@ setup(
     name='recordpeeker',
     description='Peeks at data from FFRK',
     long_description=read('README.md'),
-    version='0.1.8',
+    version='0.1.9',
     packages=find_packages(),
     author='Jonathan Chang',
     url='https://github.com/jonchang/recordpeeker',
