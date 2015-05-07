@@ -44,6 +44,8 @@
 
 ### Windows
 
+[See a screencast of these instructions.](https://www.youtube.com/watch?v=MUK988k0ufU)
+
 *Note: only tested on Windows 8.1*
 
 1.  Install Python at https://www.python.org/downloads/release/python-279/ (use the MSI installer)
