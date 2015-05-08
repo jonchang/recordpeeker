@@ -3,6 +3,26 @@ import os
 import json
 import sys
 
+
+
+def quote(file):
+    """Return a shell-escaped version of the file string."""
+    # https://hg.python.org/cpython/file/2.7/Lib/pipes.py#l267
+    # Copied here because this function, for some INSANE reason, may not always
+    # be available on Windows.
+    import string
+    _safechars = frozenset(string.ascii_letters + string.digits + '@%_-+=:,./')
+    for c in file:
+        if c not in _safechars:
+            break
+    else:
+        if not file:
+            return "''"
+        return file
+    # use single quotes, and put single quotes into double quotes
+    # the string $'b is then quoted as '$'"'"'b'
+    return "'" + file.replace("'", "'\"'\"'") + "'"
+
 def parse_args(argv):
     parser = argparse.ArgumentParser("Test")
     parser.add_argument("--port", "-p", type=int, default=8080, help="Specify the port recordpeeker runs on")
@@ -15,7 +35,7 @@ def launch():
     # This is just here so that --help returns the arguments
     args = parse_args(sys.argv)
     if sys.argv[1:]:
-        arglist = " ".join(sys.argv[1:])
+        arglist = " ".join([quote(x) for x in sys.argv[1:]])
         scriptargs = '-s "{0}" "{1}"'.format(script, arglist)
     else:
         scriptargs = '-s "{0}"'.format(script)

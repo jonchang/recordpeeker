@@ -120,9 +120,9 @@ def handle_survival_event(data):
 
 def start(context, argv):
     global args
-    
+
     from recordpeeker.command_line import parse_args
-    if len(argv) > 2:  # have additional arguments
+    if len(argv) > 1:  # have additional arguments
         split_args = shlex.split(argv[1], False, os.name == "Posix")
         args = parse_args(split_args)
     else:
