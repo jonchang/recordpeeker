@@ -24,9 +24,9 @@ def enter_dungeon(data, flow):
             print "Took too long! Entering the dungeon so you don't get kicked out."
             return
         print "Opponent is {0}, retrying...".format(name)
-        resp = requests.post(leave_url, headers=headers, data=dungeon_request)
+        resp = requests.post(leave_url, headers=headers, data=dungeon_request, verify=False)
         if resp.status_code != requests.codes.ok: resp.raise_for_status()
-        resp = requests.post(enter_url, headers=headers, data=dungeon_request)
+        resp = requests.post(enter_url, headers=headers, data=dungeon_request, verify=False)
         if resp.status_code != requests.codes.ok: resp.raise_for_status()
         data = json_decode(resp.content)
         name = data.get("enemy", dict(name="???", memory_factor="0")).get("name")
