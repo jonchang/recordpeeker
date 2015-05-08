@@ -6,6 +6,17 @@ import requests
 from recordpeeker import json_decode
 from recordpeeker.dispatcher import Dispatcher
 
+def maybe_insecure_post(url, **kwargs):
+    """Insecure workaround for SNI errors on certain versions of Windows."""
+    try:
+        resp = requests.post(url, **kwargs)
+    except requests.exceptions.SSLError:
+        kwargs['verify'] = False
+        resp = requests.post(url, **kwargs)
+    if resp.status_code != requests.codes.ok:
+        resp.raise_for_status()
+    return resp
+
 def enter_dungeon(data, flow):
     global args
 
@@ -24,12 +35,15 @@ def enter_dungeon(data, flow):
             print "Took too long! Entering the dungeon so you don't get kicked out."
             return
         print "Opponent is {0}, retrying...".format(name)
-        resp = requests.post(leave_url, headers=headers, data=dungeon_request, verify=False)
-        if resp.status_code != requests.codes.ok: resp.raise_for_status()
-        resp = requests.post(enter_url, headers=headers, data=dungeon_request, verify=False)
-        if resp.status_code != requests.codes.ok: resp.raise_for_status()
+        resp = maybe_insecure_post(leave_url, headers=headers, data=dungeon_request)
+        resp = maybe_insecure_post(enter_url, headers=headers, data=dungeon_request)
         data = json_decode(resp.content)
-        name = data.get("enemy", dict(name="???", memory_factor="0")).get("name")
+        if data.get("success", False):
+            name = data.get("enemy", dict(name="???", memory_factor="0")).get("name")
+        else:
+            # Errror, just pass it through
+            print "Server error, letting the game handle it."
+            flow.response.content = resp.content
 
     print "Found {0}! Entering the dungeon now...".format(name)
     if resp is not None:
