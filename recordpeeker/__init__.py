@@ -27,7 +27,20 @@ def slicedict(d, s):
     return {k:v for k,v in d.iteritems() if k in s}
 
 def best_equipment(series, heap, stat, n=3):
-    return [y.rs(series) for y in heapq.nlargest(n, heap, lambda x: x.rs(series)[stat])]
+    n_seen = 0
+    seen_eq = []
+    last_seen = None
+    for item in sorted(heap, key=lambda x: x.rs(series)[stat], reverse=True):
+        if n_seen == n:
+            break
+        if item.rs(series) == last_seen or item.rs(series) in seen_eq:
+            continue
+        seen_eq.append(item.rs(series))
+        n_seen += 1
+        yield item.rs(series)
+    else:
+        for ii in range(n - n_seen):
+            yield {"name": "n/a", "acc": 0, "atk": 0, "def": 0, "eva": 0, "matk": 0, "mdef": 0, "mnd": 0}
 
 def load_dict(path):
     res = dict()
